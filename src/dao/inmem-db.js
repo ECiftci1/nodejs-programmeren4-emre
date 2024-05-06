@@ -20,14 +20,6 @@ const database = {
             firstName: 'Marieke',
             lastName: 'Jansen',
             emailAdress: 'm@server.nl'
-            // Hier de overige velden uit het functioneel ontwerp
-        },
-        {
-            id: 2,
-            firstName: 'Emre',
-            lastName: 'Ciftci',
-            emailAdress: 'ec@server.nl'
-            // Hier de overige velden uit het functioneel ontwerp
         }
     ],
 
@@ -67,9 +59,36 @@ const database = {
             // met het toegevoegde item als argument, of null als er een fout is opgetreden
             callback(null, item)
         }, this._delayTime)
+    },
+
+    deleteById: (userId, callback) => {
+        // Simulate an asynchronous operation
+        setTimeout(() => {
+            const index = database._data.findIndex(user => user.id === userId);
+            if (index === -1) {
+                callback({ message: `Error: User with ID ${userId} does not exist!` }, null);
+            } else {
+                const deletedUser = database._data.splice(index, 1)[0];
+                callback(null, deletedUser);
+            }
+        }, database._delayTime);
+    },
+
+    updateById: (userId, newData, callback) => {
+        // Simulate an asynchronous operation
+        setTimeout(() => {
+            const index = database._data.findIndex(user => user.id === userId);
+            if (index === -1) {
+                callback({ message: `Error: User with ID ${userId} does not exist!` }, null);
+            } else {
+                // Update user data
+                const updatedUser = { ...database._data[index], ...newData };
+                database._data[index] = updatedUser;
+                callback(null, updatedUser);
+            }
+        }, database._delayTime);
     }
 
-    // Voeg zelf de overige database functionaliteit toe
 }
 
 module.exports = database

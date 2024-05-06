@@ -5,6 +5,7 @@ chai.should()
 const router = express.Router()
 const userController = require('../controllers/user.controller')
 const logger = require('../util/logger')
+const userService = require('../services/user.service');
 
 // Tijdelijke functie om niet bestaande routes op te vangen
 const notFound = (req, res, next) => {
@@ -80,13 +81,36 @@ const validateUserCreateChaiExpect = (req, res, next) => {
     }
 }
 
+router.get('/api/user/:userId', (req, res, next) => {
+    const userId = parseInt(req.params.userId); // Parse the userId to an integer
+    logger.trace('GET /api/user/:userId', userId);
+    userService.getById(userId, (error, success) => {
+        if (error) {
+            return next({
+                status: error.status,
+                message: error.message,
+                data: {}
+            });
+        }
+        if (success) {
+            res.status(200).json({
+                status: 200,
+                message: success.message,
+                data: success.data
+            });
+        }
+    });
+});
+
 // Userroutes
 router.post('/api/user', validateUserCreateChaiExpect, userController.create)
 router.get('/api/user', userController.getAll)
 router.get('/api/user/:userId', userController.getById)
+router.delete('/api/user/:userId', userController.deleteById)
+router.put('/api/user/:userId', userController.updateById)
 
 // Tijdelijke routes om niet bestaande routes op te vangen
-router.put('/api/user/:userId', notFound)
-router.delete('/api/user/:userId', notFound)
+// router.put('/api/user/:userId', notFound)
+// router.delete('/api/user/:userId', notFound)
 
 module.exports = router

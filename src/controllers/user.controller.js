@@ -62,6 +62,49 @@ let userController = {
                 })
             }
         })
+    },
+
+    deleteById: (req, res, next) => {
+        const userId = parseInt(req.params.userId);
+        logger.trace('userController: deleteById', userId);
+        userService.deleteById(userId, (error, success) => {
+            if (error) {
+                return next({
+                    status: error.status,
+                    message: error.message,
+                    data: {}
+                });
+            }
+            if (success) {
+                res.status(200).json({
+                    status: 200,
+                    message: success.message,
+                    data: success.data
+                });
+            }
+        });
+    },
+
+    updateById: (req, res, next) => {
+        const userId = parseInt(req.params.userId);
+        const newData = req.body;
+        logger.trace('userController: updateById', userId);
+        userService.updateById(userId, newData, (error, success) => {
+            if (error) {
+                return next({
+                    status: error.status,
+                    message: error.message,
+                    data: {}
+                });
+            }
+            if (success) {
+                res.status(200).json({
+                    status: 200,
+                    message: success.message,
+                    data: success.data
+                });
+            }
+        });
     }
 
     // Todo: Implement the update and delete methods
