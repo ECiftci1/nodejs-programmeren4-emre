@@ -15,7 +15,7 @@
         "avans",
         "programmeren-4"
     ],
-    "author": "Mark van der Velden",
+    "author": "Emre Ciftci",
     "license": "ISC",
     "prettier": {
         "singleQuote": true,
