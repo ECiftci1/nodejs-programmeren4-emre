@@ -62,7 +62,6 @@ const database = {
     },
 
     deleteById: (userId, callback) => {
-        // Simulate an asynchronous operation
         setTimeout(() => {
             const index = database._data.findIndex(user => user.id === userId);
             if (index === -1) {
@@ -75,13 +74,11 @@ const database = {
     },
 
     updateById: (userId, newData, callback) => {
-        // Simulate an asynchronous operation
         setTimeout(() => {
             const index = database._data.findIndex(user => user.id === userId);
             if (index === -1) {
                 callback({ message: `Error: User with ID ${userId} does not exist!` }, null);
             } else {
-                // Update user data
                 const updatedUser = { ...database._data[index], ...newData };
                 database._data[index] = updatedUser;
                 callback(null, updatedUser);

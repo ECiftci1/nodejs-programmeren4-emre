@@ -82,7 +82,7 @@ const validateUserCreateChaiExpect = (req, res, next) => {
 }
 
 router.get('/api/user/:userId', (req, res, next) => {
-    const userId = parseInt(req.params.userId); // Parse the userId to an integer
+    const userId = parseInt(req.params.userId);
     logger.trace('GET /api/user/:userId', userId);
     userService.getById(userId, (error, success) => {
         if (error) {
