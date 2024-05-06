@@ -10,7 +10,7 @@ const database = {
     _data: [
         {
             id: 0,
-            firstName: 'Hendrick',
+            firstName: 'Hendrik',
             lastName: 'van Dam',
             emailAdress: 'hvd@server.nl'
             // Hier de overige velden uit het functioneel ontwerp
@@ -20,6 +20,13 @@ const database = {
             firstName: 'Marieke',
             lastName: 'Jansen',
             emailAdress: 'm@server.nl'
+            // Hier de overige velden uit het functioneel ontwerp
+        },
+        {
+            id: 2,
+            firstName: 'Emre',
+            lastName: 'Ciftci',
+            emailAdress: 'ec@server.nl'
             // Hier de overige velden uit het functioneel ontwerp
         }
     ],
