@@ -1,6 +1,6 @@
 {
     "name": "nodejs_programmeren_4_2324",
-    "version": "0.0.1",
+    "version": "3.1.1",
     "description": "Mijn eerste Express server",
     "main": "index.js",
     "scripts": {
@@ -16,7 +16,7 @@
         "avans",
         "programmeren-4"
     ],
-    "author": "Robin",
+    "author": "Emre",
     "license": "ISC",
     "prettier": {
         "singleQuote": true,
