@@ -9,7 +9,7 @@ const app = express()
 // express.json zorgt dat we de body van een request kunnen lezen
 app.use(express.json())
 
-const port = process.env.PORT || 3000
+const port = process.env.PORT || 10000
 
 // Dit is een voorbeeld van een simpele route
 app.get('/api/info', (req, res) => {
