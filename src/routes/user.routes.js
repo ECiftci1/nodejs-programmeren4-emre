@@ -14,6 +14,17 @@ const validateUserCreate = (req, res, next) => {
         chai.expect(req.body.firstName).to.not.be.empty;
         chai.expect(req.body.firstName).to.be.a('string');
         chai.expect(req.body.firstName).to.match(/^[a-zA-Z]+$/, 'firstName must be a string');
+
+        assert(req.body.emailAdress, 'Missing or incorrect emailAdress field');
+        chai.expect(req.body.emailAdress).to.not.be.empty;
+        chai.expect(req.body.emailAdress).to.be.a('string');
+        chai.expect(req.body.emailAdress).to.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/, 'Invalid email address');
+
+        assert(req.body.password, 'Missing or incorrect password field');
+        chai.expect(req.body.password).to.not.be.empty;
+        chai.expect(req.body.password).to.be.a('string');
+        chai.expect(req.body.password).to.match(/^(?=.*\d).{8,}$/, 'Password must be at least 8 characters long and include numbers');
+
         logger.trace('User successfully validated');
         next();
     } catch (ex) {
