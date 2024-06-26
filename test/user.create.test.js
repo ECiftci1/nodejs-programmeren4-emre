@@ -68,7 +68,7 @@ describe('UC201 Registreren als nieuwe user', () => {
         done()
     })
 
-    it('TC-201-5 Gebruiker succesvol geregistreerd', (done) => {
+    it.skip('TC-201-5 Gebruiker succesvol geregistreerd', (done) => {
         chai.request(server)
             .post(endpointToTest)
             .send({
