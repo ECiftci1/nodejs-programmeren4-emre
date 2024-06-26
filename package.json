@@ -1,6 +1,6 @@
 {
     "name": "nodejs_programmeren_4_2324",
-    "version": "3.1.1",
+    "version": "0.0.1",
     "description": "Mijn eerste Express server",
     "main": "index.js",
     "scripts": {

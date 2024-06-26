@@ -23,23 +23,42 @@ let userController = {
         });
     },
 
+    // getAll: (req, res, next) => {
+    //     logger.trace('getAll');
+    //     userService.getAll((error, success) => {
+    //         if (error) {
+    //             return next({
+    //                 status: error.status,
+    //                 message: error.message,
+    //                 data: {}
+    //             });
+    //         }
+    //         if (success) {
+    //             res.status(200).json({
+    //                 status: 200,
+    //                 message: success.message,
+    //                 data: success.data
+    //             });
+    //         }
+    //     });
+    // },
+
     getAll: (req, res, next) => {
-        logger.trace('getAll');
-        userService.getAll((error, success) => {
+        const filters = req.query; // Extract query parameters as filters
+        logger.info('Fetching users with filters:', filters);
+        userService.getAll(filters, (error, success) => {
             if (error) {
                 return next({
-                    status: error.status,
-                    message: error.message,
+                    status: error.status || 500,
+                    message: error.message || 'Error fetching users with filters',
                     data: {}
                 });
             }
-            if (success) {
-                res.status(200).json({
-                    status: 200,
-                    message: success.message,
-                    data: success.data
-                });
-            }
+            res.status(200).json({
+                status: 200,
+                message: 'Users fetched successfully',
+                data: success.data
+            });
         });
     },
 
@@ -67,7 +86,7 @@ let userController = {
     getProfile: (req, res, next) => {
         const userId = req.userId;
         logger.trace('getProfile for userId', userId);
-        userService.getProfile(userId, (error, success) => {
+        userService.getById(userId, (error, success) => {
             if (error) {
                 return next({
                     status: error.status,
