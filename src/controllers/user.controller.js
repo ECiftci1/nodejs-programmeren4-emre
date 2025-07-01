@@ -105,9 +105,20 @@ let userController = {
     },
 
     update: (req, res, next) => {
-        const userId = req.params.userId;
+        const userId = parseInt(req.params.userId);
         const user = req.body;
+        const userIdFromToken = req.userId;
+
         logger.trace('userController: update', userId);
+
+        if (userId !== userIdFromToken) {
+            return res.status(403).json({
+                status: 403,
+                message: 'You can only update your own account!',
+                data: {}
+            });
+        }
+
         userService.update(userId, user, (error, success) => {
             if (error) {
                 return next({
@@ -127,8 +138,19 @@ let userController = {
     },
 
     delete: (req, res, next) => {
-        const userId = req.params.userId;
+        const userId = parseInt(req.params.userId);
+        const userIdFromToken = req.userId;
+
         logger.trace('userController: delete', userId);
+
+        if (userId !== userIdFromToken) {
+            return res.status(403).json({
+                status: 403,
+                message: 'You can only delete your own account!',
+                data: {}
+            });
+        }
+
         userService.delete(userId, (error, success) => {
             if (error) {
                 return next({

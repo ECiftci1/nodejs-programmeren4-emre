@@ -8,10 +8,11 @@ let mealService = {
         database.query(query, [isActive, isVega, isVegan, isToTakeHome, maxAmountOfParticipants, price, imageUrl, cookId, name, description, allergenes], (error, results) => {
             if (error) {
                 logger.error('Error creating meal:', error);
-                return callback({
+                callback({
                     status: 500,
                     message: 'Failed to create meal'
-                });
+                }, null);
+                return;
             }
             logger.info('Meal created:', results);
             callback(null, {
@@ -27,10 +28,11 @@ let mealService = {
         database.query(query, (error, results) => {
             if (error) {
                 logger.error('Error fetching meals:', error);
-                return callback({
+                callback({
                     status: 500,
                     message: 'Failed to fetch meals'
-                });
+                }, null);
+                return;
             }
             logger.info('Meals fetched:', results);
             callback(null, {
@@ -46,16 +48,18 @@ let mealService = {
         database.query(query, [mealId], (error, results) => {
             if (error) {
                 logger.error('Error fetching meal:', error);
-                return callback({
+                callback({
                     status: 500,
                     message: 'Failed to fetch meal'
-                });
+                }, null);
+                return;
             }
             if (results.length === 0) {
-                return callback({
+                callback({
                     status: 404,
                     message: 'Meal not found'
-                });
+                }, null);
+                return;
             }
             logger.info('Meal fetched:', results[0]);
             callback(null, {
@@ -70,8 +74,7 @@ let mealService = {
         const { isActive, isVega, isVegan, isToTakeHome, maxAmountOfParticipants, price, imageUrl, cookId, name, description, allergenes } = meal;
         let updateFields = [];
         let updateValues = [];
-    
-        // Only add fields to the update query if they are provided
+
         if (isActive !== undefined) {
             updateFields.push('isActive = ?');
             updateValues.push(isActive);
@@ -116,65 +119,66 @@ let mealService = {
             updateFields.push('allergenes = ?');
             updateValues.push(allergenes);
         }
-    
-        // Ensure that at least one field is being updated
+
         if (updateFields.length === 0) {
-            return callback({
+            callback({
                 status: 400,
                 message: 'No valid fields to update'
-            });
+            }, null);
+            return;
         }
-    
-        // Construct the query dynamically
+
         const updateQuery = `UPDATE meal SET ${updateFields.join(', ')} WHERE id = ?`;
         updateValues.push(mealId);
-    
-        // Execute the query
+
         database.query(updateQuery, updateValues, (error, results) => {
             if (error) {
                 logger.error('Error updating meal:', error);
-                return callback({
+                callback({
                     status: 500,
                     message: 'Failed to update meal'
-                });
+                }, null);
+                return;
             }
             if (results.affectedRows === 0) {
-                return callback({
+                callback({
                     status: 404,
                     message: 'Meal not found'
-                });
+                }, null);
+                return;
             }
             logger.info('Meal updated:', results);
             callback(null, {
                 status: 200,
                 message: 'Meal updated successfully',
-                data: { mealId: mealId }
+                data: { mealId }
             });
         });
     },
-    
 
     delete: (mealId, callback) => {
         const query = 'DELETE FROM meal WHERE id = ?';
         database.query(query, [mealId], (error, results) => {
             if (error) {
                 logger.error('Error deleting meal:', error);
-                return callback({
+                callback({
                     status: 500,
                     message: 'Failed to delete meal'
-                });
+                }, null);
+                return;
             }
             if (results.affectedRows === 0) {
-                return callback({
+                callback({
                     status: 404,
                     message: 'Meal not found'
-                });
+                }, null);
+                return;
             }
             logger.info('Meal deleted:', results);
             callback(null, {
                 status: 200,
                 message: 'Meal deleted successfully',
-                data: { mealId: mealId }
+                data: { mealId }
             });
         });
     }
